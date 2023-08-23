@@ -84,14 +84,7 @@ REST_FRAMEWORK = {
     # ]
 }
 
-SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        'APP': {
-            'client_id': '2975841281ec67d33572',
-            'secret': '8e041187f48e97d7beb31e984a9bea1d0d90745f',
-        }
-    }
-}
+
 
 
 ROOT_URLCONF = 'social.urls'
@@ -119,6 +112,7 @@ WSGI_APPLICATION = 'social.wsgi.application'
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = "http://localhost:5173/success"
+LOGOUT_REDIRECT_URL = 'http://localhost:5173'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
