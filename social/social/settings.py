@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,18 +39,25 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Requirements of the allauth package
     "django.contrib.sites",
-    "rest_framework",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    # Specific Providers
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.google",
+    # django-rest-framework
+    "rest_framework",
+    # get https secure connection
     "sslserver",
+    # making api calls from frontend without worrying about cross-origin errors
     "corsheaders",
+    # Style forms fast 
+    'crispy_forms',
+    "crispy_bootstrap4",
 ]
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -58,8 +66,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # 'social.middleware.SampleMiddleware.CustomSameSiteMiddleware'
+    "django.middleware.clickjacking.XFrameOptionsMiddleware"
 ]
 
 
@@ -68,28 +75,36 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
+# as i am using vite, the PORT is 5173,if you use create-react-app enter http://localhost:3000
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
-
+# To send the cookies
 CORS_ALLOW_CREDENTIALS = True
 
 SESSION_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_SECURE = True
 
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Static content
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_DIR,"static")
+]
+
+
 # ? Adding session_cookie_samesite would break the code, but now it magically works
 # ? in google both the request sending party and api should be one , either HTTP or HTTPS, extra layer of security
 # ? can not log in with multiple social providers with have the same details like email
 
+# Rest framework configuration dictionary
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
     ]
-    # ,
-    # 'DEFAULT_PERMISSION_CLASSES':[
-    #     'rest_framework.permissions.IsAuthenticated'
-    # ]
 }
 
 
@@ -98,7 +113,9 @@ ROOT_URLCONF = "social.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(PROJECT_DIR, 'templates'),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -115,8 +132,10 @@ WSGI_APPLICATION = "social.wsgi.application"
 
 SITE_ID = 1
 
+# Redirect after successful login
 LOGIN_REDIRECT_URL = "http://localhost:5173/success"
-LOGOUT_REDIRECT_URL = "http://localhost:5173"
+# Redirect after successful logout
+ACCOUNT_LOGOUT_REDIRECT_URL  = "http://localhost:5173"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
