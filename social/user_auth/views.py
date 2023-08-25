@@ -19,7 +19,7 @@ def get_user_information_from_request(request):
             user_data = {
                 "provider"   : socialaccount_instance.provider,
                 "username"   : extraData['login'],
-                "avatar_url" : extraData.get('avatar_url'),
+                "avatar_url" : currUser.profilePhoto.url,
                 "html_url"   : extraData.get('html_url'),
                 "email"      : extraData.get('email'),
             }
@@ -28,7 +28,7 @@ def get_user_information_from_request(request):
             user_data = {
                 "provider":socialaccount_instance.provider,
                 "name"    : extraData.get('name'),
-                "picture" :extraData.get('picture'),
+                "picture" :currUser.profilePhoto.url,
             }
             return Response(user_data)
         return Response({'msg':request.user.username})

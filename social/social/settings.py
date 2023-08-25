@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     # Style forms fast 
     'crispy_forms',
     "crispy_bootstrap4",
+    # django app
+    "user_auth.apps.UserAuthConfig"
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -92,7 +94,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Static content
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_DIR,"static")
+    os.path.join(BASE_DIR,"static")
 ]
 
 
@@ -114,7 +116,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(PROJECT_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -182,9 +184,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-# AUTH_USER_MODEL = os.path.join(PROJECT_DIR,'OverriddingUserModel','CustomUsermodel','CustomUserModel')
+AUTH_USER_MODEL = "user_auth.CustomUserModel"
 
-MEDIA_ROOT = os.path.join(PROJECT_DIR,'media')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
 
 # Default primary key field type

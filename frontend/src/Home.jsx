@@ -40,7 +40,7 @@ const Home = () => {
       return (
         <div>
           <div style={{"display":"flex","justifyContent":"space-around","width":"100vw"}}>
-          <img src={userdata.picture} alt="Profile Photo" height="250px" width="250px" style={{"borderRadius":"50%"}}/>
+          <img src={`https://localhost:8000/${userdata.picture}`} alt="Profile Photo" height="250px" width="250px" style={{"borderRadius":"50%"}}/>
           <h2>{userdata.name}</h2>
           </div>
         </div>
