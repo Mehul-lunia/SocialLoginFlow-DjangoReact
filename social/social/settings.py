@@ -139,6 +139,8 @@ LOGIN_REDIRECT_URL = "http://localhost:5173/success"
 # Redirect after successful logout
 ACCOUNT_LOGOUT_REDIRECT_URL  = "http://localhost:5173"
 
+ACCOUNT_SIGNUP_FORM_CLASS = 'user_auth.CustomallauthSignupForm.SignupForm'
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
